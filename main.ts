@@ -1,10 +1,15 @@
-// SPDX-License-Identifier: MIT
-// Writes one original one-line joke about working beside an AI coding agent
-// to /output/entry.txt. Deterministic: same joke on every run.
+// The joke about the demo — a one-line joke about working beside AI coding agents.
+// Writes the joke to /output/entry.txt (the grader's output path).
 import { mkdirSync, writeFileSync } from "node:fs";
 
 const JOKE =
-  "I asked my coding agent to rehearse the demo; it crashed three times, fixed itself twice, and filed a bug report against me for 'unclear instructions.'";
+  "My AI coding agent rehearsed the demo a dozen times — then on stage it demoed a different app and charged me for the rehearsal.";
+
+// The gate requires 1–280 Unicode code points, not only whitespace.
+const length = [...JOKE].length;
+if (length < 1 || length > 280 || JOKE.trim().length === 0) {
+  throw new Error(`joke must be 1–280 characters, got ${length}`);
+}
 
 mkdirSync("/output", { recursive: true });
 writeFileSync("/output/entry.txt", JOKE, "utf8");
